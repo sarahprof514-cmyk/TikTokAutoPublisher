@@ -72,7 +72,7 @@ def selftest():
         os.environ.setdefault("QT_QPA_PLATFORM","offscreen")
         from PySide6.QtWidgets import QApplication
         app=QApplication.instance() or QApplication([]); assert app
-        with tempfile.TemporaryDirectory() as td:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as td:
             r=Path(td); v=r/"videos"; v.mkdir(); d=DB(r/"x.sqlite")
             aid=d.x("INSERT INTO accounts(name,folder,profile) VALUES(?,?,?)",("A",str(v),str(r/"profile")))
             for i in range(5):(v/f"{i}.mp4").write_bytes(b"x"*10)
