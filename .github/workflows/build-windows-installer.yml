@@ -38,8 +38,8 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
         run: |
-          & ".\dist\TikTokAutoPublisher\TikTokAutoPublisher.exe" --self-test
-          if ($LASTEXITCODE -ne 0) { throw "Frozen self-test failed: $LASTEXITCODE" }
+          $proc = Start-Process -FilePath ".\dist\TikTokAutoPublisher\TikTokAutoPublisher.exe" -ArgumentList "--self-test" -Wait -PassThru
+          if ($proc.ExitCode -ne 0) { throw "Frozen self-test failed: $($proc.ExitCode)" }
       - name: Verify x64 executable
         shell: powershell
         run: |
